@@ -24,16 +24,7 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
 app.use("/api/rules", ruleRoutes);
 
 // Check if build folder exists before serving frontend
-import fs from "fs";
-const buildPath = path.join(__dirname, "build");
-if (fs.existsSync(buildPath)) {
-  app.use(express.static(buildPath));
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(buildPath, "index.html"));
-  });
-} else {
-  console.log("⚠️ Build folder not found. Run 'npm run build' in frontend!");
-}
+app.use(express.static(path.join(__dirname, '../frontend/build')));
 
 // Start Server
 const PORT = process.env.PORT || 5000;
